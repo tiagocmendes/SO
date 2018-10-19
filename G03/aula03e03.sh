@@ -22,3 +22,9 @@ case $space in
         ;;
 esac
 echo $Message
+
+# Duvidas
+size=$(df -h | awk '{print $2}' | grep G | grep -v Size | sort -n \
+        | tail -1 )
+        # $( ) -> command substitution
+echo "largest occupied size = $size"

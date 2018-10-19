@@ -51,6 +51,8 @@ Exercício 3:
 
 Exercício 4:
 
+    a) 
+    
     $df -h (df -> disk free; -h -> human readable)
     Filesystem  Size    Used    Avail   Use%    Mounted on
 
