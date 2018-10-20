@@ -77,4 +77,4 @@ do  echo ${d[i]} ; done
 # ciclo for (3)
 $for j in ${!d[@]} -> lista dos indices
 
-$ arr1 = ( $(cat filename) )
+$ arr1 = ( $(cat "$1") )

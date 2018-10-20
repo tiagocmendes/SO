@@ -21,16 +21,16 @@ fi
 #read n1
 #read n2
 
-compareNumbers n1 n2
+compareNumbers $1 $2
 
 case $? in  
     0)
         echo "Os números são iguais"
         ;;
     1)
-        echo "O número $n1 é maior que o número $n2"
+        echo "O número $1 é maior que o número $2"
         ;;
     2)
-        echo "O número $n1 é menor que o número $n2"
+        echo "O número $1 é menor que o número $2"
         ;;
 esac
