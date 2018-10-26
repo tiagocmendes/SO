@@ -1,2 +1,2 @@
-# SO
-Repository for Operative Systems course
+# so
+Sistemas Operativos | UA 2018/2019
