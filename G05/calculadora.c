@@ -16,7 +16,12 @@ int main(int argc, char **argv)
     double x2 = atof(argv[3]);
     //char op = argv[2][0];
     char op = *argv[2];
-    double i;   
+    double i;
+
+    // Alínea d) - Dúvida na função strtod
+    char *pc;   
+    x1 = strtod(argv[1], &pc);
+    x2 = strtod(argv[3], &pc);   
 
     switch(op)
     {
@@ -38,10 +43,10 @@ int main(int argc, char **argv)
             break;
         case 'p':
             i = pow(x1,x2);
-            printf("%.3f ** %.3f = %.3f\n",x1,x2,i);
+            printf("%.3f power to %.3f = %.3f\n",x1,x2,i);
             break;
         default:
-            printf("Operação não encontrada!");
+            printf("Operação não encontrada!\n");
             break;
     }
 
