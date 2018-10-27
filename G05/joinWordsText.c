@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,11 +18,15 @@ int main(int argc, char **argv)
     for(i = 1 ; i < argc ; i++)
     {   
         strcpy(arg, argv[i]);
-        for(j = 0;j < strlen(arg);j++)
+        if(isalpha(arg[0]) != 0)
         {
-            sentence[numChars] = arg[j];
-            numChars++;
-        }
+            for(j = 0;j < strlen(arg);j++)
+            {
+                sentence[numChars] = arg[j];
+                numChars++;
+             }
+        }   
+        
     }
 
     printf("Sentence: %s\n",sentence);
