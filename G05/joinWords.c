@@ -25,4 +25,5 @@ int main(int argc, char **argv)
     }
 
     printf("Sentence: %s\n",sentence);
+    return 0;
 }
