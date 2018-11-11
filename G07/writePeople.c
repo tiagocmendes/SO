@@ -17,7 +17,7 @@ void printPersonInfo(Person *p)
 int main (int argc, char *argv[])
 {
     FILE *fp = NULL;
-    int i;
+    int i, np;
     Person p = {35, 1.65, "xpto"};
 
     /* Validate number of arguments */
@@ -36,12 +36,20 @@ int main (int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
+    printf("n pessoas?\n");
+    scanf("%d", &np);
+
     /* Write 10 itens on a file */
-    for(i = 0 ; i < 10 ; i++)
+    for(i = 0 ; i < np ; i++)
     {    
-        p.age = p.age+1;
-        p.height = p.height+0.03;
-        fwrite(&p, sizeof(Person), 1, fp);
+        printf("Pessoa %d:\n",i+1);
+        printf("Nome? \n");
+        scanf(" %[^\n]", p.name); // o espaço branco é um skip whitespace
+        printf("Idade? \n");      
+        scanf("%d", &p.age);
+        printf("Altura? \n");
+        scanf("%lf", &p.height); // %lf - double
+        fwrite(&p, sizeof(Person),1,fp); 
     }
 
     fclose(fp);
