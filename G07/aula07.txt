@@ -2,7 +2,7 @@ Ficheiros de texto
 -> fopen, fclose
 read -> fscanf, fgets, fgetc 
 write -> fprintf, fprints, fprintc
-
+a
 Ficheiros binários
 -> fopen, fclose    (+ "b")
 read -> fread
