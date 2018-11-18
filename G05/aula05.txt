@@ -13,7 +13,7 @@ pi1 = n; -> nome de array sozinho funciona como ponteiro para o 1º elemento
 
 pi1[4] = 25; -> pi1[4](int *)    *(pi1+4) -> pi1+4(int *), *(pi1+4)(int)
 
-
+a
 **argv -> array de argumentos, ponteiro para ponteiro para char
 
 argv[0] = 'cp';
