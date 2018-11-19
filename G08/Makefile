@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 
-progs = fork1 fork2 child fork3 fork4 sig1 sig2 myls
+progs = fork1 fork2 child fork3 fork4 sig1 sig2 myls sig3
 objs = $(progs:%=%.o)
 
 all:		$(progs)
