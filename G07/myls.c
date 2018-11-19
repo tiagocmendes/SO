@@ -4,12 +4,12 @@
 
 int main(int argc, char *argv[])
 {
-    int flags, opt;
+    int flag, opt;
     int nsecs, tfnd;
+    char *extension;
 
     nsecs = 0;
     tfnd = 0;
-    flags = 0;
 
     /* The getopt() function parses the command-line arguments. Its arguments
       argc and argv are the argument count and array as passed to the main()
@@ -21,20 +21,20 @@ int main(int argc, char *argv[])
 
       For more information check the man page (man 3 getopt) 
      */
-    while ((opt = getopt(argc, argv, "nt:")) != -1)
+    while ((opt = getopt(argc, argv, "dfe:")) != -1)
     {
         switch (opt)
         {
-            case 'n':
-                flags = 1;
+            case 'd':
+                flag = 0;
                 break;
-            case 't':
-                nsecs = atoi(optarg);
-                tfnd = 1;
+            case 'f':
+                flag = 1;
                 break;
-                /* If getopt() finds an option character in argv that was not included in
-                  optstring, or if it detects a missing option argument, it returns '?'
-                 */
+            case 'e':
+                flag = 2;
+                extension = optarg;
+                break;
             default: /* '?' */
                 fprintf(stderr, "Usage: %s [-t nsecs] [-n] name\n",
                         argv[0]);
@@ -42,7 +42,12 @@ int main(int argc, char *argv[])
         }
     }
 
-    printf("flags=%d; tfnd=%d; nsecs=%d; optind=%d\n", flags, tfnd, nsecs, optind);
+    /*switch(opt)
+    {
+        case 0:
+
+    }*/
+
 
     /* By default, getopt() permutes the contents of argv as it scans, so that
       eventually all the nonoptions are at the end.
@@ -52,8 +57,6 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Expected argument after options\n");
         return EXIT_FAILURE;
     }
-
-    printf("name argument = %s\n", argv[optind]);
 
     /* Other code omitted */
 

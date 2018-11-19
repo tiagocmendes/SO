@@ -17,8 +17,8 @@ void printPersonInfo(Person *p)
 int main (int argc, char *argv[])
 {
     FILE *fp = NULL;
-    Person p[1024];
-    int np,new_np,i;
+    Person p, people[100];
+    int i, np, rp;
 
     /* Validate number of arguments */
     if(argc != 2)
@@ -29,7 +29,7 @@ int main (int argc, char *argv[])
 
     /* Open the file provided as argument */
     errno = 0;
-    fp = fopen(argv[1], "rb");
+    fp = fopen(argv[1], "r");
     if(fp == NULL)
     {
         perror ("Error opening file!");
@@ -37,25 +37,40 @@ int main (int argc, char *argv[])
     }
 
     /* read all the itens of the file */
-    np = fread(p, sizeof(Person), 1024, fp);
+    np = 0;
+    while(fread(&p, sizeof(Person), 1, fp) == 1)
+    {
+        people[np] = p;
+        np++;
+    }
+    fclose(fp);
 
-    printf("n pessoas?\n");
-    scanf("%d", &new_np);
+    fp = fopen(argv[1], "w");
+    /* Ask for the numbers of people to write in the file */
+    printf("Número de pessoas?\n");
+    scanf("%d",&rp);
 
     /* Write 10 itens on a file */
-    for(i = np ; i < new_np ; i++)
+    for(i = 0 ; i < rp ; i++)
     {    
-        printf("Pessoa %d:\n",i+1);
-        printf("Nome? \n");
-        scanf(" %[^\n]", p[i].name); // o espaço branco é um skip whitespace
-        printf("Idade? \n");      
-        scanf("%d", &p[i].age);
-        printf("Altura? \n");
-        scanf("%lf", &p[i].height); // %lf - double
-        fwrite(&p, sizeof(Person),1,fp); 
+        printf("Pessoa %d\n",i+1);
+        printf("Nome? ");
+        scanf(" %[^\n]",p.name);
+        printf("Idade? ");
+        scanf("%d",&p.age);
+        printf("Altura? ");
+        scanf("%lf",&p.height);
+        people[np] = p;
+        np++;
+    }
+    
+    for(i = 0; i < np; i++)
+    {
+        printPersonInfo(&people[i]);
+        fwrite(&people[i], sizeof(Person), 1, fp);
     }
 
-    printPersonInfo(p);
     fclose(fp);
+
     return EXIT_SUCCESS;
 }

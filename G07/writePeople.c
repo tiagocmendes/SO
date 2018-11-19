@@ -36,20 +36,21 @@ int main (int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    printf("n pessoas?\n");
-    scanf("%d", &np);
+    /* Ask for the numbers of people to write in the file */
+    printf("Número de pessoas?\n");
+    scanf("%d",&np);
 
     /* Write 10 itens on a file */
     for(i = 0 ; i < np ; i++)
     {    
-        printf("Pessoa %d:\n",i+1);
-        printf("Nome? \n");
-        scanf(" %[^\n]", p.name); // o espaço branco é um skip whitespace
-        printf("Idade? \n");      
-        scanf("%d", &p.age);
-        printf("Altura? \n");
-        scanf("%lf", &p.height); // %lf - double
-        fwrite(&p, sizeof(Person),1,fp); 
+        printf("Pessoa %d\n",i+1);
+        printf("Nome? ");
+        scanf(" %[^\n]",p.name);
+        printf("Idade? ");
+        scanf("%d",&p.age);
+        printf("Altura? ");
+        scanf("%lf",&p.height);
+        fwrite(&p, sizeof(Person), 1, fp);
     }
 
     fclose(fp);
