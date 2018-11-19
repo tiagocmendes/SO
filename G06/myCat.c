@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <errno.h>
 
@@ -13,41 +12,39 @@
 
 int main(int argc, char *argv[])
 {
-    FILE *fp = NULL;
-    char line [LINEMAXSIZE]; 
-    int i, lineCounter;
+    int i; 
 
     /* Validate number of arguments */
-    if(argc < 2)
+    if(argc == 1)
     {
         printf("USAGE: %s fileName\n", argv[0]);
         return EXIT_FAILURE;
     }
-    
-    /* Open the file provided as argument */
-    errno = 0;
+
     for(i = 1;i < argc;i++)
     {
+        int nlines = 1;
+        FILE *fp = NULL;
+        char line [LINEMAXSIZE];
+
+        /* Open the file provided as argument */
+        errno = 0;
         fp = fopen(argv[i], "r");
         if(fp == NULL)
         {
             perror ("Error opening file!");
             return EXIT_FAILURE;
         }
-        
-        printf("Ficheiro %d:\n",i);
+
         /* read all the lines of the file */
-        lineCounter = 1;
         while(fgets(line, sizeof(line), fp) != NULL )
-        {   
-            if(line[strlen(line) - 1] == '\n')
-                line[strlen(line)-1] = '\0';
-            printf("%s -> (%d)\n",line,lineCounter);
-            lineCounter++;
+        {
+             printf("(%d) -> %s",nlines,line);
+             nlines++;
         }
+        printf("\n\n");
+
         fclose (fp);
-        printf("%s","\n");
     }
-    
     return EXIT_SUCCESS;
 }
