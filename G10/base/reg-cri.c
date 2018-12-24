@@ -86,8 +86,7 @@ void delay(int nite)
 }
 
 static int create(void)
-{   // CRIAR O ARRAY DE SEMÁFOROS AQUI
-    // SEMÁFORO COMEÇA A 1, LOGO TEMOS DE FAZER UM UP()
+{
 
     int semid;
 
@@ -96,7 +95,8 @@ static int create(void)
         perror ("shmemCreate");
         return EXIT_FAILURE;
     }
-    /* cria a , falhando se já existir */
+
+    /* cria um semáforo, falhando se já existir */
     if ((semid = semCreate(SHMKEY, 1)) == -1) { 
         perror ("semCreate");
         return EXIT_FAILURE;
@@ -110,13 +110,24 @@ static int create(void)
 
 static int destroy(void)
 {
-    // DESTRUIR O ARRAY DE SEMAFOROS!
-
 
     /* ganha acesso à memória partilhada */
     int shmid = shmemConnect (SHMKEY);
     if (shmid == -1) { 
         perror ("shmemConnect");
+        return EXIT_FAILURE;
+    }
+
+    int semid = semConnect(SHMKEY);
+    if(semid == -1)
+    {
+        perror("semConnect");
+        return EXIT_FAILURE;
+    }
+
+    if(semDestroy(semid) == -1)
+    {
+        perror("semDestroy");
         return EXIT_FAILURE;
     }
 
@@ -162,13 +173,11 @@ static int iter(int niter)
                  return EXIT_FAILURE;
 
             case 0:  // processo incrementador
-    
-
                  for (j = 0; j < niter; j++)
-                 {  // REGIÃO CRÍTICA
+                 { /* faz cópia do contador em mem. part. */
 
-                    semDown(semid, 1);                    
-                     /* faz cópia do contador em mem. part. */
+                    // REGIÃO CRÍTICA
+                     semDown(semid, 1); 
                      auxcnt = *cntp;
 
                      /* generate a time delay */
@@ -176,14 +185,12 @@ static int iter(int niter)
 
                      /* incrementa a cópia e armazena-a em mem. part. */
                      *cntp = auxcnt + 1;
-                    
-                    semUp(semid,1);
-                    // fim da região crítica
+
+                     semUp(semid,1);
+
                      /* generate a time delay */
                      delay(BIG);
                  }
-                 
-
 
                  /* desanexa a memória partilhada do espaço de endereçamento próprio */
                  if (shmemDettach (cntp) == -1)
@@ -247,10 +254,18 @@ static int print(void)
         return EXIT_FAILURE;
     }
 
-    /* imprime valor */
-    // REGIÃO CRÍTICA
-    printf("Value = %d\n", *cntp);
+    /* ganha acesso ao semáforo */
+    int semid = semConnect(SHMKEY);
+    if (semid == -1) { 
+        perror ("semConnect");
+        return EXIT_FAILURE;
+    }
 
+    // REGIÃO CRÍTICA
+    /* imprime valor */
+    semDown(semid, 1);
+    printf("Value = %d\n", *cntp);
+    semUp(semid, 1);
     /* desanexa a memória partilhada do espaço de endereçamento próprio */
     if (shmemDettach (cntp) == -1)
     { 
