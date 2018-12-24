@@ -33,8 +33,7 @@ int status;
 /*   allusion to internal function */
 static void *incrementer (void *arg);
 
-/*   main thread: it starts the simulation and generates the incrementing threads
- */
+/*   main thread: it starts the simulation and generates the incrementing threads */
 int main (int argc, char *argv[])
 {
     int niter = 1000;                                                                /* number of iterations by default */

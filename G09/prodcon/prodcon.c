@@ -34,7 +34,7 @@
 typedef struct
         { 
             int id;                                                                         /* thread identification */
-            int niter;                                                                       /* number of iterations */
+            int niter;                                                                      /* number of iterations  */
         } THREAD_PAR;
 
 /*   allusion to internal function */

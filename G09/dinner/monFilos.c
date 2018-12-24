@@ -41,7 +41,7 @@ extern FILE *fic;
 
 /* estrutura de dados interna */
 
-/* variàveis que descrevem a situação dos filósofos num dado instante */
+/* variáveis que descrevem a situação dos filósofos num dado instante */
 
 static unsigned int estado[N];              /* estado actual dos filósofos */
 static pthread_cond_t vez[N];                    /* ponto de sincronização */
@@ -75,7 +75,6 @@ static void guardar_estado (void);
 */
 
 int pegar_nos_garfos (unsigned int f)
-
 {
   if (pthread_mutex_lock (&acesso) != 0)              /* entrada no monitor */
       return (ERRO);

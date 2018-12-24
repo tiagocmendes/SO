@@ -61,5 +61,5 @@ void vInc (void)
     value = val + 1;
 
     /* generate time delay 2 */
-    delay(SMALL);
+    delay(BIG);
 }
